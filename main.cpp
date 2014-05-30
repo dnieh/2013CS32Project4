@@ -6,7 +6,7 @@
 #include "Indexer.h"
 
 // KNOWN BUGS
-// * Loading from the same indexer object that has just been saved causes a crash.
+// * [FIXED?] Loading from the same indexer object that has just been saved causes a crash.
 //   Likely caused by clearing the MyMap<string, vector<HashedUrlCount> > object.
 // * [PARTIALLY FIXED] Templated functions in Indexer.cpp may be causing problems. Work around functions 
 //   were used. Templated functions should only be in header files
@@ -27,8 +27,8 @@ void writeWordInfo(Indexer& indexer, std::string word);
 
 int main()
 {
-	MyMapTest();
-	WordBagTest();
+	//MyMapTest();
+	//WordBagTest();
 	IndexerTest();
 
 	std::cerr << "Passed all tests!" << std::endl;
@@ -96,7 +96,7 @@ bool IndexerTest()
 	assert(indexer.incorporate("www.b.com", wb2));
 
 
-	writeWordInfo(indexer, "I");
+	//writeWordInfo(indexer, "I");
 	// writes "I appears 2 times at www.a.com
 
 	// Save the index as file(s) whose names start with prefix
