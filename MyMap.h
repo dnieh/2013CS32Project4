@@ -44,6 +44,8 @@ public:
 	{
 		BSTNODE* temp = m_root;
 		freeTree(temp);
+		m_root = nullptr;
+		m_nodeCounter = 0;
 	}
 
 	int size() const
@@ -167,6 +169,26 @@ public:
 
 	// Test printing
 	// TODO: Remove 
+	void testPrintIndexInit()
+	{
+		// Object specific print function for MyMap <string, vector<HashedUrl> > instances
+		BSTNODE* cur = m_root;
+		testPrintIndex(cur);
+	}
+
+	void testPrintIndex(BSTNODE* cur)
+	{
+		if (cur == nullptr)
+			return;
+	
+		testPrintIndex(cur->left);
+
+		// Print the key string
+		std::cerr << cur->key << " " << std::endl;
+
+		testPrintIndex(cur->right);
+	}
+
 	void testPrintInit()
 	{
 		BSTNODE* cur = m_root;

@@ -3,12 +3,20 @@
 #include <cassert>
 #include "MyMap.h"
 #include "provided.h"
+#include "Indexer.h"
 
-// BUGS
-// - Loading from the same indexer object that has just been saved causes a crash.
+// KNOWN BUGS
+// * Loading from the same indexer object that has just been saved causes a crash.
 //   Likely caused by clearing the MyMap<string, vector<HashedUrlCount> > object.
-// - What happens if you try to add more Urls to the hash table after loading from
+// * [PARTIALLY FIXED] Templated functions in Indexer.cpp may be causing problems. Work around functions 
+//   were used. Templated functions should only be in header files
+// * [FIXED] What happens if you try to add more Urls to the hash table after loading from
 //   a save file? Does the hash table need to be pre-loaded with valid hashed url values?
+
+// TODO
+// * Consider using a list cointainer instead of a vector for HashedUrlCounts
+// * Understand why template functions in indexer.h do not need to be inline while all other
+//   functions need to be.
 
 // Testing Functions
 void MyMapTest();
@@ -19,8 +27,8 @@ void writeWordInfo(Indexer& indexer, std::string word);
 
 int main()
 {
-	//MyMapTest();
-	//WordBagTest();
+	MyMapTest();
+	WordBagTest();
 	IndexerTest();
 
 	std::cerr << "Passed all tests!" << std::endl;
@@ -87,7 +95,8 @@ bool IndexerTest()
 	WordBag wb2("<html>i like gogiberries and I hate spam</html>");
 	assert(indexer.incorporate("www.b.com", wb2));
 
-	//writeWordInfo(indexer, "I");
+
+	writeWordInfo(indexer, "I");
 	// writes "I appears 2 times at www.a.com
 
 	// Save the index as file(s) whose names start with prefix
@@ -110,17 +119,17 @@ bool IndexerTest()
 		std::cerr << "Index loaded successfully" << std::endl;
 
 	// Add more pages to the second index
-	//WordBag wb2("<html>engineering is FUN</html>");
-	//indexe2.incorporate("www.b.com", wb2);
-	//WordBag wb3("<html>Engineering majors like fun</html>");
-	//indexe2.incorporate("www.c.com", wb3);
+	WordBag wb3("<html>engineering is FUN</html>");
+	assert(indexer2.incorporate("www.c.com", wb3));
+	WordBag wb4("<html>Engineering majors like like like like fun</html>");
+	assert(indexer2.incorporate("www.d.com", wb4));
 
-	//writeWordInfo(indexer2, "like");
+	writeWordInfo(indexer2, "like");
 	// writes:
 		// "like appears 1 times at www.a.com"
 		// "like appears 1 times at www.b.com"
 
-	//writeWordInfo(indexer2, "smallberg");
+	writeWordInfo(indexer2, "smallberg");
 	// writes "smallberg was not found in the index"
 
 	return true;
