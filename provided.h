@@ -5,6 +5,7 @@
 #include <vector>
 #include <algorithm>
 #include <cctype>
+#include "http.h"
 
 class WordBagImpl;
 

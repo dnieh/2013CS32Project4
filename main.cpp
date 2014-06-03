@@ -4,6 +4,8 @@
 #include "MyMap.h"
 #include "provided.h"
 #include "Indexer.h"
+//#include "http.h"
+
 
 // KNOWN BUGS
 // * [FIXED?] Loading from the same indexer object that has just been saved causes a crash.
@@ -24,12 +26,15 @@ void WordBagTest();
 void WordBagTestPrint(WordBag& wb);
 bool IndexerTest();
 void writeWordInfo(Indexer& indexer, std::string word);
+void reportStatus(std::string url, bool success);
+bool webCrawlerTest();
 
 int main()
 {
 	//MyMapTest();
 	//WordBagTest();
-	IndexerTest();
+	//IndexerTest();
+	webCrawlerTest();
 
 	std::cerr << "Passed all tests!" << std::endl;
 }
@@ -148,4 +153,49 @@ void writeWordInfo(Indexer& indexer, std::string word)
 	for (unsigned int i = 0; i < urlCounts.size(); i++)
 		std::cerr << word << " appeears " << urlCounts[i].count
 		<< " times at " << urlCounts[i].url << std::endl;
+}
+
+void reportStatus(std::string url, bool success)
+{
+	if (success)
+		std::cerr << "Downloaded and indexed the page at " << url << std::endl;
+	else
+		std::cerr << "Unable to download the page at " << url << std::endl;
+}
+
+bool webCrawlerTest()
+{
+	const std::string INDEX_PREFIX = "C:/Temp/myIndex";
+
+	WebCrawler wc;
+
+	// Load a previously saved index from disk
+	if (!wc.load(INDEX_PREFIX))
+	{
+		std::cerr << "Error loading index to web crawler" << std::endl;
+		return false;
+	}
+
+	std::cerr << "Index loaded successfully" << std::endl;
+
+	// Specify which URLs are to crawl and index
+	wc.addUrl("http://www.techxlaw.com");
+	wc.addUrl("http://www.yahoo.com");
+	wc.addUrl("http://www.nytimes.com");
+	wc.addUrl("http://www.symantec.com/enterprise");
+
+	// Download the specified URLs and add their contents to the index
+	// designating reportStatus as the callback function
+	wc.crawl(reportStatus);
+
+	// Save the updated index to disk
+	if (!wc.save(INDEX_PREFIX))
+	{
+		std::cerr << "Error saving index from web crawler" << std::endl;
+		return false;
+	}
+
+	std::cerr << "Index saved successfully" << std::endl;
+
+	return true;
 }

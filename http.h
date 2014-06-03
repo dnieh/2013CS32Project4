@@ -57,15 +57,13 @@
 #include <string>
 #include <vector>
 #include <cctype>
-#if __cplusplus == 201103L  // C++11
-# include <unordered_map>
-using std::unordered_map;
-#else
-# include <tr1/unordered_map>
-using std::tr1::unordered_map;
-#endif
 
-const int MAX_PAGE_SIZE = 1000000;
+#include <unordered_map>
+
+using std::unordered_map;
+
+
+const int MAX_PAGE_SIZE = 10000000;
 
 class HTTPController
 {

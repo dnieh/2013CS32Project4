@@ -48,6 +48,7 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>wininet.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -67,10 +68,12 @@
   <ItemGroup>
     <ClCompile Include="Indexer.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="WebCrawler.cpp" />
     <ClCompile Include="WordBag.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="http.h" />
+    <ClInclude Include="Indexer.h" />
     <ClInclude Include="MyMap.h" />
     <ClInclude Include="provided.h" />
   </ItemGroup>
