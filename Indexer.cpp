@@ -81,7 +81,7 @@ std::vector<UrlCount> IndexerImpl::getUrlCounts(std::string word)
 	// TODO: Understand why I have to do the following. Couldn't get the pointer version to work
 	std::vector <HashedUrlCount> copiedHashedVector = *temp;
 
-	for (int i = 0; i < temp->size(); i++)
+	for (unsigned int i = 0; i < temp->size(); i++)
 	{
 		copiedVector.count = copiedHashedVector[i].count;
 		copiedVector.url = idToUrl(copiedHashedVector[i].hashedUrl);
@@ -109,6 +109,11 @@ bool IndexerImpl::load(std::string filenameBase)
 {
 	// Must refill the hash table
 	ClosedHashTable hashTableCopy;
+
+	// Must also transfer over m_hashedMapCount
+	m_hashedMapCount = loadAC(filenameBase + ".ac");
+	if (m_hashedMapCount == -1) // Error loading value from file
+		return false;
 
 	bool loadCheck = (
 		loadMyMap(filenameBase + ".uti", m_urlToId) &&

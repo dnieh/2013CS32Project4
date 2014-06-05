@@ -14,7 +14,7 @@ public:
 	bool load(std::string filenameBase);
 
 private:
-	Indexer m_masterIndex;
+	Indexer m_webCrawlerIndex;
 	int m_numberOfUrls;
 	std::list<std::string> m_storedUrls;
 
@@ -58,7 +58,7 @@ void WebCrawlerImpl::crawl(void(*callback)(std::string url, bool success))
 		{
 			// Step 2
 			WordBag wb(page);
-			m_masterIndex.incorporate(url, wb);
+			m_webCrawlerIndex.incorporate(url, wb);
 
 			// TODO: REMOVE AFTER TESTING
 			/*std::string word;
@@ -84,12 +84,12 @@ void WebCrawlerImpl::crawl(void(*callback)(std::string url, bool success))
 
 bool WebCrawlerImpl::save(std::string filenameBase)
 {
-	return m_masterIndex.save(filenameBase);
+	return m_webCrawlerIndex.save(filenameBase);
 }
 
 bool WebCrawlerImpl::load(std::string filenameBase)
 {
-	return m_masterIndex.load(filenameBase);
+	return m_webCrawlerIndex.load(filenameBase);
 }
 
 //******************** WebCrawler functions *******************************

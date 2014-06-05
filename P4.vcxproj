@@ -68,6 +68,7 @@
   <ItemGroup>
     <ClCompile Include="Indexer.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Searcher.cpp" />
     <ClCompile Include="WebCrawler.cpp" />
     <ClCompile Include="WordBag.cpp" />
   </ItemGroup>

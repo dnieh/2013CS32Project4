@@ -77,7 +77,7 @@ public:
 	{
 		int total = 0;
 
-		for (int i = 0; i < url.length(); i++)
+		for (unsigned int i = 0; i < url.length(); i++)
 			total = total + (i + 1) * url[i];
 
 		total = total % HASH_TABLE_SIZE;
@@ -186,7 +186,7 @@ inline void writeItem(std::ostream& stream, const std::vector<HashedUrlCount>& v
 	writeItem(stream, vh.size() * 2);  // Calls int overload of writeItem
 
 	// Write each item in the vector
-	for (int i = 0; i < vh.size(); i++)
+	for (unsigned int i = 0; i < vh.size(); i++)
 		writeItem(stream, vh[i]);
 }
 
@@ -283,7 +283,7 @@ inline std::string getFileExtension(std::string filename)
 	}
 
 	// Reverses the string extension
-	for (int i = 0, k = fileExtension.size() - 1; i < fileExtension.size() / 2;
+	for (unsigned int i = 0, k = fileExtension.size() - 1; i < fileExtension.size() / 2;
 		i++, k--)
 	{
 		char tempChar = fileExtension[i];
@@ -398,7 +398,7 @@ bool loadMyMap(std::string filename, MyMap<KeyType, ValueType>& m)
 	{
 		// Write the ac filename by rewriting the current filename
 		std::string acFileName;
-		for (int i = 0; i < filename.size(); i++)
+		for (unsigned int i = 0; i < filename.size(); i++)
 		{
 			if (filename[i] == '.')
 			{
@@ -450,5 +450,23 @@ inline bool loadWtic(std::string filename, MyMap<std::string, std::vector<Hashed
 		return false;
 }
 
+inline int loadAC(std::string filename)
+{
+	std::ifstream stream(filename);
+	if (!stream)
+	{
+		std::cerr << "Error: Cannot read from " << filename << std::endl;
+		return -1;
+	}
+
+	if (getFileExtension(filename) == "ac")
+	{
+		int k;
+		stream >> k;
+		return k;
+	}
+
+	return -1;
+}
 
 #endif  // INDEXER_INCLUDED

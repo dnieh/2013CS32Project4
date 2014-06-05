@@ -4,11 +4,10 @@
 #include "MyMap.h"
 #include "provided.h"
 #include "Indexer.h"
-//#include "http.h"
 
 
 // KNOWN BUGS
-// * [FIXED?] Loading from the same indexer object that has just been saved causes a crash.
+// * [FIXED] Loading from the same indexer object that has just been saved causes a crash.
 //   Likely caused by clearing the MyMap<string, vector<HashedUrlCount> > object.
 // * [PARTIALLY FIXED] Templated functions in Indexer.cpp may be causing problems. Work around functions 
 //   were used. Templated functions should only be in header files
@@ -20,7 +19,7 @@
 // * Understand why template functions in indexer.h do not need to be inline while all other
 //   functions need to be.
 
-// Testing Functions
+// TESTING FUCNTIONS
 void MyMapTest();
 void WordBagTest();
 void WordBagTestPrint(WordBag& wb);
@@ -28,13 +27,15 @@ bool IndexerTest();
 void writeWordInfo(Indexer& indexer, std::string word);
 void reportStatus(std::string url, bool success);
 bool webCrawlerTest();
+bool searcherTest();
 
 int main()
 {
 	//MyMapTest();
 	//WordBagTest();
 	//IndexerTest();
-	webCrawlerTest();
+	//webCrawlerTest();
+	searcherTest();
 
 	std::cerr << "Passed all tests!" << std::endl;
 }
@@ -151,7 +152,7 @@ void writeWordInfo(Indexer& indexer, std::string word)
 	}
 
 	for (unsigned int i = 0; i < urlCounts.size(); i++)
-		std::cerr << word << " appeears " << urlCounts[i].count
+		std::cerr << word << " appears " << urlCounts[i].count
 		<< " times at " << urlCounts[i].url << std::endl;
 }
 
@@ -197,5 +198,38 @@ bool webCrawlerTest()
 
 	std::cerr << "Index saved successfully" << std::endl;
 
+	return true;
+}
+
+bool searcherTest()
+{
+	Searcher s;
+
+	// Load previously built index
+	const std::string INDEX_PREFIX = "C:/Temp/myIndex";
+	if (!s.load(INDEX_PREFIX))
+	{
+		std::cerr << "Error loading searcher index" << std::endl;
+		return false;
+	}
+
+	std::cerr << "Successfully loaded searcher index" << std::endl;
+	
+	std::string query;
+	std::cerr << "Please enter a search query: ";
+	while (std::getline(std::cin, query) && !query.empty())
+	{
+		std::vector<std::string> matches = s.search(query);
+		if (matches.empty())
+			std::cerr << "No pages matched your search terms. Try again or press [ENTER] twice to quit." << std::endl;
+		else
+		{
+			std::cerr << "Your search found " << matches.size()
+				<< " matching pages." << std::endl;
+			for (unsigned int i = 0; i < matches.size(); i++)
+				std::cerr << matches[i] << std::endl;
+		}
+		std::cerr << "Please enter a search query: ";
+	}
 	return true;
 }
