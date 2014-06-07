@@ -27,7 +27,7 @@ WordBagImpl::WordBagImpl(const string& text)
 
 	while (t.getNextToken(w))
 	{
-		int* findInt = m_map.find(w);
+		int *findInt = m_map.find(w);
 
 		if (findInt == nullptr)
 		{
@@ -44,14 +44,14 @@ WordBagImpl::WordBagImpl(const string& text)
 
 bool WordBagImpl::getFirstWord(string& word, int& count)
 {
-	int* getFirst = m_map.getFirst(word);
+	int *getFirstVal = m_map.getFirst(word);
 
-	if (getFirst == nullptr)
+	if (getFirstVal == nullptr)
 		return false;
 
 	else
 	{
-		count = *getFirst;
+		count = *getFirstVal;
 		return true;
 	}
 
@@ -59,14 +59,14 @@ bool WordBagImpl::getFirstWord(string& word, int& count)
 
 bool WordBagImpl::getNextWord(string& word, int& count)
 {
-	int* getNext = m_map.getNext(word);
+	int *getNextVal = m_map.getNext(word);
 
-	if (getNext == nullptr)
+	if (getNextVal == nullptr)
 		return false;
 
 	else
 	{
-		count = *getNext;
+		count = *getNextVal;
 		return true;
 	}
 }
