@@ -95,7 +95,7 @@ public:
 
 		for (int i = start; i < end; i++)
 		{
-			std::cout << i << " "
+			std::cerr << i << " "
 				<< m_buckets[i].hashedId << " "
 				<< m_buckets[i].originalId << " "
 				<< m_buckets[i].used << std::endl;
@@ -251,7 +251,7 @@ bool saveMyMap(std::string filename, MyMap<KeyType, ValueType>& m)
 	if (val == nullptr)
 		return false;
 
-	for (val; val != nullptr; val = m.getNext(tempKey))
+	for ( ; val != nullptr; val = m.getNext(tempKey))
 	{
 		// Get the extension of the file so we can use a different procedure for the .ac file
 		// TODO: REFACTOR (Gets called everytime a file is saved)

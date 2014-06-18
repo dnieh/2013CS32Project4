@@ -9,7 +9,7 @@
 // KNOWN BUGS
 // * [FIXED] Loading from the same indexer object that has just been saved causes a crash.
 //   Likely caused by clearing the MyMap<string, vector<HashedUrlCount> > object.
-// * [PARTIALLY FIXED] Templated functions in Indexer.cpp may be causing problems. Work around functions 
+// * [FIXED] Templated functions in Indexer.cpp may be causing problems. Work around functions 
 //   were used. Templated functions should only be in header files
 // * [FIXED] What happens if you try to add more Urls to the hash table after loading from
 //   a save file? Does the hash table need to be pre-loaded with valid hashed url values?
@@ -32,7 +32,7 @@ bool searcherTest();
 int main()
 {
 	//MyMapTest();
-	//WordBagTest();
+	WordBagTest();
 	//IndexerTest();
 	//webCrawlerTest();
 	searcherTest();
